@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
         formAnswers = document.getElementById('formAnswers'),
         burgerBtn = document.getElementById('burger'),
         prevBtn = document.getElementById('prev'),
-        nextBtn = document.getElementById('next');
+        nextBtn = document.getElementById('next'),
+        modalDialog = document.querySelector('.modal-dialog');
 
   let clientWidth = document.documentElement.clientWidth;
 
@@ -82,6 +83,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   ];
 
+  let count = -100;
+  modalDialog.style.top = count + '%';
+
+  const animateModal = () => {
+    modalDialog.style.top = count + '%';
+    count += 3;
+
+    if (count < 0) {
+      requestAnimationFrame(animateModal);
+    } else {
+      count = -100;
+    }
+  };
+  
+
   if (clientWidth < 768) {
     burgerBtn.style.display = 'flex';
   } else {
@@ -94,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const renderAnswers = (index) => {
       questions[index].answers.forEach((answer) => {
         const answerItem = document.createElement('div');
-        answerItem.classList.add('answers-item', 'd-flex', 'flex-column');
+        answerItem.classList.add('answers-item', 'd-flex', 'justify-content-center');
         answerItem.innerHTML = `
           <input type="${questions[index].type}" id="${answer.title}" name="answer" class="d-none">
           <label for="${answer.title}" class="d-flex flex-column justify-content-between">
@@ -115,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderQuestions(numberQuestion);
 
     prevBtn.style.display = 'none';
+    nextBtn.style.display = 'block';
     prevBtn.onclick = () => {
       numberQuestion--;
       if (numberQuestion === 0) {
@@ -148,11 +165,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   burgerBtn.addEventListener('click', () => {
     burgerBtn.classList.add('active');
+    requestAnimationFrame(animateModal);
     modalBlock.classList.add('d-block');
     playTest();
   });
 
   btnOpenModal.addEventListener('click', () => {
+    requestAnimationFrame(animateModal);
     modalBlock.classList.add('d-block');
     playTest();
   });
@@ -169,5 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
       burgerBtn.classList.remove('active');
     }
   });
+
 
 });
