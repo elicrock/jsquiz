@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let numberQuestion = 0;
     modalTitle.textContent = 'Ответь на вопрос:';
 
+    // Рендер ответов
     const renderAnswers = (index) => {
       questions[index].answers.forEach((answer) => {
         const answerItem = document.createElement('div');
@@ -161,8 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
           obj['Номер телефона'] = input.value;
         }
       });
-
-      // finalAnswers.push(obj);
     };
 
     prevBtn.onclick = () => {
@@ -186,6 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   };
 
+  // Обработчики событий
   window.addEventListener('resize', () => {
     clientWidth = document.documentElement.clientWidth;
     if (clientWidth < 768) {
